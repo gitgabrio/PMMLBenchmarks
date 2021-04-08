@@ -113,3 +113,9 @@ fabric.properties
 *.iml
 .idea
 
+*.json
+*.csv
+*.txt
+**/*.json
+**/*.csv
+**/*.txt
