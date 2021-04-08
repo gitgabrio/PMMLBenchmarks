@@ -119,6 +119,4 @@ fabric.properties
 /**/*.json
 /**/*.csv
 /**/*.txt
-/trusty-benchmark/jmh-result.json
-/trusty-benchmark/results.csv
-/trusty-benchmark/results.txt
+
