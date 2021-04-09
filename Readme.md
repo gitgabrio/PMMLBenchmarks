@@ -30,8 +30,11 @@ Running trusty SimpleBenchmark and storing results in file trusty-results.json:
     cd trusty-benchmarks
     java -jar target/trusty-benchmarks.jar -jvmArgs "-Xms4g -Xmx4g" -foe true -rf json -rff trusty-results.json SimpleBenchmark
 
-Running trusty SimpleBenchmark and storing results in file trusty-results.json:
+Running jpmml SimpleBenchmark and storing results in file trusty-results.json:
 
     cd jpmml-benchmarks
     java -jar target/jpmml-benchmarks.jar -jvmArgs "-Xms4g -Xmx4g" -foe true -rf json -rff jpmml-results.json SimpleBenchmark
 
+Running with async profiling 
+
+    java -jar target/jpmml-benchmarks.jar -prof gc -jvmArgs "-Xms24g -Xmx24g" -foe true -rf json -rff jpmml-results.json SimpleBenchmark

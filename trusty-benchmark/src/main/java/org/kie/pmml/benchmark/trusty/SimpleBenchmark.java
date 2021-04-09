@@ -27,12 +27,12 @@ import java.util.concurrent.TimeUnit;
 
 import static org.kie.pmml.benchmark.trusty.Builder.getPMMLRuntime;
 
-@BenchmarkMode({Mode.Throughput, Mode.AverageTime, Mode.SampleTime, Mode.SingleShotTime})
+@BenchmarkMode(Mode.AverageTime)
 @State(Scope.Benchmark)
-@Warmup(iterations = 2)
+@Warmup(iterations = 10, time = 20)
 @Measurement(iterations = 5, time = 30)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
-@Fork(value = 1)
+@Fork(value = 2)
 public class SimpleBenchmark extends SimpleAbstractBenchmark {
 
     private PMMLContext pmmlContext;

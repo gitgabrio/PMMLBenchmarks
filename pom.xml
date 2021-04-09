@@ -21,7 +21,7 @@
         <version.jmh>1.21</version.jmh>
         <version.junit>4.13.1</version.junit>
         <version.sl4j>1.7.30</version.sl4j>
-        <kie.version>7.52.0-SNAPSHOT</kie.version>
+        <kie.version>7.53.0-SNAPSHOT</kie.version>
     </properties>
 
     <build>

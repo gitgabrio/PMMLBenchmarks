@@ -20,57 +20,35 @@ import org.jpmml.evaluator.FieldValue;
 import org.jpmml.evaluator.InputField;
 import org.jpmml.evaluator.ModelEvaluator;
 import org.kie.pmml.benchmark.common.SimpleAbstractBenchmark;
-import org.openjdk.jmh.annotations.*;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.kie.pmml.benchmark.jpmml.Builder.getModelEvaluator;
 
-@BenchmarkMode(Mode.AverageTime)
-@State(Scope.Benchmark)
-@Warmup(iterations = 10, time = 20)
-@Measurement(iterations = 5, time = 30)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
-@Fork(value = 2)
-public class SimpleBenchmark extends SimpleAbstractBenchmark {
+public class SimpleMain extends SimpleAbstractBenchmark {
 
-    private Map<FieldName, FieldValue> arguments;
-
-    @State(Scope.Benchmark)
-    public static class MyState {
-        public ModelEvaluator<?> evaluator;
-
-        @Setup(Level.Trial)
-        public void initialize() {
-            System.out.println("initialize");
-            evaluator = getModelEvaluator();
+    public static void main(String[] args) {
+        AtomicInteger counter = new AtomicInteger();
+        long startTime = System.currentTimeMillis();
+        ModelEvaluator<?> evaluator = getModelEvaluator();
+        long intermediateTime = System.currentTimeMillis();
+        for (int i = 0; i < 1000; i++) {
+            Map<FieldName, FieldValue> arguments = setupModel(evaluator);
+            evaluate(evaluator, arguments, counter);
         }
-
-        @TearDown(Level.Trial)
-        public void shutdown() {
-            // Nothing to do
-        }
+        long stopTime = System.currentTimeMillis();
+        System.out.println("ModelEvaluator instantiation took " + (intermediateTime - startTime) + " ms");
+        System.out.println("Loop execution took " + (stopTime - intermediateTime) + " ms");
     }
 
-    @Setup
-    public void setupModel(MyState state) {
-        arguments = getArguments(state.evaluator.getInputFields());
-    }
-
-    @Benchmark
-    public Map<FieldName, ?> evaluate(MyState state) {
-        return state.evaluator.evaluate(arguments);
-    }
-
-    private Map<FieldName, FieldValue> getArguments(List<? extends InputField> inputFields) {
+    private static Map<FieldName, FieldValue> setupModel(ModelEvaluator<?> evaluator) {
         Map<FieldName, FieldValue> toReturn = new LinkedHashMap<>();
         // Mapping the record field-by-field from data source schema to PMML schema
-        for (InputField inputField : inputFields) {
+        for (InputField inputField : evaluator.getInputFields()) {
             FieldName inputName = inputField.getName();
-            Object rawValue = INPUT_DATA.get(inputName.getValue());
+            Object rawValue = ((Double)INPUT_DATA.get(inputName.getValue()) +0.1);
             // Transforming an arbitrary user-supplied value to a known-good PMML value
             FieldValue inputValue = inputField.prepare(rawValue);
             toReturn.put(inputName, inputValue);
@@ -78,5 +56,9 @@ public class SimpleBenchmark extends SimpleAbstractBenchmark {
         return toReturn;
     }
 
+    private static void evaluate(ModelEvaluator<?> evaluator, Map<FieldName, FieldValue> arguments, AtomicInteger counter) {
+        System.out.println(evaluator.evaluate(arguments).hashCode());
+        System.out.println(counter.addAndGet(1));
+    }
 
 }
