@@ -3,8 +3,14 @@ The benchmarks are written using JMH.
 
 To run the benchmarks you need to:
 
-Build the project with mvn clean install
-Run the built project uberjar with `java -jar target/drools-benchmarks.jar
+Build the project with 
+    
+    mvn clean install
+
+Run the built project uberjar with 
+
+    java -jar target/drools-benchmarks.jar
+
 You can define several JMH parameters for executing the benchmarks:
 -jvm - Custom JVM to use when forking (path to JVM executable). JMH can create new JVM fork for a set of benchmark iterations.
 -jvmArgs - Custom JVM parameters. E.g. you can specify memory consumption arguments here.
@@ -19,7 +25,13 @@ You can define several JMH parameters for executing the benchmarks:
 You can also define a wildcard pattern, that specifies, which benchmarks should be run.
 Examples
 
-Running trusty SimpleBenchmark and storing results in file results.json:
+Running trusty SimpleBenchmark and storing results in file trusty-results.json:
 
-java -jar target/trusty-benchmarks.jar -jvmArgs "-Xms4g -Xmx4g" -foe true -rf json -rff results.json SimpleBenchmark
+    cd trusty-benchmarks
+    java -jar target/trusty-benchmarks.jar -jvmArgs "-Xms4g -Xmx4g" -foe true -rf json -rff trusty-results.json SimpleBenchmark
+
+Running trusty SimpleBenchmark and storing results in file trusty-results.json:
+
+    cd jpmml-benchmarks
+    java -jar target/jpmml-benchmarks.jar -jvmArgs "-Xms4g -Xmx4g" -foe true -rf json -rff jpmml-results.json SimpleBenchmark
 

@@ -29,12 +29,12 @@ import java.util.concurrent.TimeUnit;
 
 import static org.kie.pmml.benchmark.jpmml.Builder.getModelEvaluator;
 
-@BenchmarkMode(Mode.Throughput)
-@State(Scope.Thread)
+@BenchmarkMode({Mode.Throughput, Mode.AverageTime, Mode.SampleTime, Mode.SingleShotTime})
+@State(Scope.Benchmark)
 @Warmup(iterations = 2)
 @Measurement(iterations = 5, time = 30)
-@OutputTimeUnit(TimeUnit.SECONDS)
-//@Fork(value = 5)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@Fork(value = 1)
 public class SimpleBenchmark extends SimpleAbstractBenchmark {
 
     private Map<FieldName, FieldValue> arguments;
@@ -45,6 +45,7 @@ public class SimpleBenchmark extends SimpleAbstractBenchmark {
 
         @Setup(Level.Trial)
         public void initialize() {
+            System.out.println("initialize");
             evaluator = getModelEvaluator();
         }
 
@@ -56,9 +57,7 @@ public class SimpleBenchmark extends SimpleAbstractBenchmark {
 
     @Setup
     public void setupModel(MyState state) {
-        System.out.println("setup arguments...");
         arguments = getArguments(state.evaluator.getInputFields());
-        System.out.println("... setup complete!");
     }
 
     @Benchmark
