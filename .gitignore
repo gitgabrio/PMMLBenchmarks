@@ -120,4 +120,3 @@ fabric.properties
 /**/*.csv
 /**/*.txt
 
-/trusty-benchmark/target/
