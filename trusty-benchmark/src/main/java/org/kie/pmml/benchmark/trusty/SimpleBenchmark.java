@@ -29,8 +29,8 @@ import static org.kie.pmml.benchmark.trusty.Builder.getPMMLRuntime;
 
 @BenchmarkMode(Mode.AverageTime)
 @State(Scope.Benchmark)
-@Warmup(iterations = 10, time = 20)
-@Measurement(iterations = 5, time = 30)
+@Warmup(iterations = 12, time = 20)
+@Measurement(iterations = 5, time = 20)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Fork(value = 2)
 public class SimpleBenchmark extends SimpleAbstractBenchmark {
