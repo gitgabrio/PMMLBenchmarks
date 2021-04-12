@@ -13,7 +13,6 @@
 
     <properties>
         <uberjar.name>trusty-benchmarks</uberjar.name>
-        <kie.version>7.53.0-SNAPSHOT</kie.version>
     </properties>
 
     <dependencies>
@@ -28,11 +27,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.kie</groupId>-->
-<!--            <artifactId>kie-ci</artifactId>-->
-<!--            <version>${kie.version}</version>-->
-<!--        </dependency>-->
         <!-- COMMON -->
         <dependency>
             <groupId>org.kie.pmml</groupId>
