@@ -20,12 +20,6 @@
             <groupId>org.kie</groupId>
             <artifactId>kie-pmml-dependencies</artifactId>
             <version>${kie.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.drools</groupId>
-                    <artifactId>drools-model-compiler</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- COMMON -->
         <dependency>
@@ -37,12 +31,6 @@
             <groupId>org.kie.pmml</groupId>
             <artifactId>trusty-kjar</artifactId>
             <version>${project.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.drools</groupId>
-                    <artifactId>drools-model-compiler</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 
