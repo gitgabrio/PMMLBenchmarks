@@ -13,6 +13,7 @@
 
     <properties>
         <uberjar.name>trusty-benchmarks</uberjar.name>
+        <kie.version>7.53.0-SNAPSHOT</kie.version>
     </properties>
 
     <dependencies>
@@ -20,38 +21,35 @@
             <groupId>org.kie</groupId>
             <artifactId>kie-pmml-dependencies</artifactId>
             <version>${kie.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.drools</groupId>
+                    <artifactId>drools-model-compiler</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.kie</groupId>-->
+<!--            <artifactId>kie-ci</artifactId>-->
+<!--            <version>${kie.version}</version>-->
+<!--        </dependency>-->
         <!-- COMMON -->
         <dependency>
             <groupId>org.kie.pmml</groupId>
             <artifactId>common-benchmarks</artifactId>
             <version>${project.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.kie.pmml</groupId>-->
-<!--            <artifactId>trusty-kjar</artifactId>-->
-<!--            <version>${project.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.kie.pmml</groupId>
+            <artifactId>trusty-kjar</artifactId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.drools</groupId>
+                    <artifactId>drools-model-compiler</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <finalName>${uberjar.name}</finalName>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

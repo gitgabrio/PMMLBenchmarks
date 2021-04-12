@@ -13,39 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.pmml.benchmark.trusty;
+package org.kie.pmml.benchmark.trusty.linearregression;
 
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieRuntimeFactory;
 import org.kie.pmml.api.runtime.PMMLRuntime;
-import org.kie.pmml.evaluator.assembler.factories.PMMLRuntimeFactoryImpl;
 
-import static org.kie.pmml.benchmark.common.AbstractBenchmark.PMML_FILE;
+public class LinearRegressionBuilder {
 
-public class Builder {
+    public static final String GROUP_ID = "org.kie.pmml";
+    public static final String ARTIFACT_ID = "trusty-kjar";
+    public static final String VERSION = "1.0-SNAPSHOT";
 
-//    public static final String GROUP_ID = "org.kie.pmml";
-//    public static final String ARTIFACT_ID = "trusty-kjar";
-//    public static final String VERSION = "1.0-SNAPSHOT";
-//    public static final String GAV = String.format("%s:%s:%s", GROUP_ID, ARTIFACT_ID, VERSION);
-//    public static final ReleaseId RELEASE_ID = new ReleaseIdImpl(GROUP_ID, ARTIFACT_ID, VERSION);
-
-    private static final String EXTERNALISECANONICALMODELLAMBDA = "drools.externaliseCanonicalModelLambda";
     private static PMMLRuntime INSTANCE;
 
 
     static {
-        System.setProperty(EXTERNALISECANONICALMODELLAMBDA, "false");
-        System.out.println(EXTERNALISECANONICALMODELLAMBDA + ": " +   System.getProperty(EXTERNALISECANONICALMODELLAMBDA));
-        System.out.println("Creating INSTANCE...");
-        INSTANCE = new PMMLRuntimeFactoryImpl().getPMMLRuntimeFromFile(PMML_FILE);
-        System.out.println("INSTANCE " + INSTANCE);
+        KieServices kieServices = KieServices.Factory.get();
+        KieContainer kieContainer = kieServices.getKieClasspathContainer( );
+        INSTANCE =  KieRuntimeFactory.of(kieContainer.getKieBase("pmmlkbase")).get(PMMLRuntime.class);
     }
 
 
-    private Builder() {
+    private LinearRegressionBuilder() {
     }
 
 
-    public static synchronized PMMLRuntime getPMMLRuntime() {
+    public static synchronized PMMLRuntime getLinearRegressionPMMLRuntime() {
 //        try {
 //            if (INSTANCE == null) {
 //                INSTANCE = getPMMLRuntimeInternal();

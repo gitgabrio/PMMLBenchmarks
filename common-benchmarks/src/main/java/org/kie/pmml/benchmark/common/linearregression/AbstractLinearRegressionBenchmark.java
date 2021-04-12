@@ -13,17 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.pmml.benchmark.common;
+package org.kie.pmml.benchmark.common.linearregression;
 
 import java.io.File;
 import java.io.IOException;
 
 import static org.kie.pmml.benchmark.common.utils.FileUtils.getFile;
 
-public abstract class AbstractBenchmark {
+public abstract class AbstractLinearRegressionBenchmark {
 
-    public static final String MODEL_NAME = "RandomForest";
-    public static final String FILE_NAME = "RandomForest.pmml";
+    public static final String MODEL_NAME = "LinearRegression";
+    public static final String FILE_NAME = "LinearRegression.pmml";
 
     public static File PMML_FILE;
 

@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.pmml.benchmark.trusty;
+package org.kie.pmml.benchmark.trusty.randomforest;
 
 import org.kie.api.pmml.PMMLRequestData;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.api.runtime.PMMLRuntime;
-import org.kie.pmml.benchmark.common.SimpleAbstractBenchmark;
+import org.kie.pmml.benchmark.common.randomforest.SimpleAbstractRandomForestBenchmark;
 import org.kie.pmml.evaluator.core.PMMLContextImpl;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.kie.pmml.benchmark.trusty.Builder.getPMMLRuntime;
+import static org.kie.pmml.benchmark.trusty.randomforest.RandomForestBuilder.getRandomForestPMMLRuntime;
 
-public class SimpleMain extends SimpleAbstractBenchmark {
+public class SimpleRandomForestMain extends SimpleAbstractRandomForestBenchmark {
 
     public static void main(String[] args) {
         AtomicInteger counter = new AtomicInteger();
         long startTime = System.currentTimeMillis();
-        PMMLRuntime pmmlRuntime = getPMMLRuntime();
+        PMMLRuntime pmmlRuntime = getRandomForestPMMLRuntime();
         long intermediateTime = System.currentTimeMillis();
         for (int i = 0; i < 1000; i++) {
             PMMLContext pmmlContext = setupModel();

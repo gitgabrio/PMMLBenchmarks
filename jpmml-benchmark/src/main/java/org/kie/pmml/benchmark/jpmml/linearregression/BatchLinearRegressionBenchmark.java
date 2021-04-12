@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.pmml.benchmark.jpmml;
+package org.kie.pmml.benchmark.jpmml.linearregression;
 
 import org.dmg.pmml.FieldName;
 import org.jpmml.evaluator.FieldValue;
 import org.jpmml.evaluator.InputField;
 import org.jpmml.evaluator.ModelEvaluator;
-import org.kie.pmml.benchmark.common.SimpleAbstractBenchmark;
+import org.kie.pmml.benchmark.common.linearregression.BatchAbstractLinearRegressionBenchmark;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.LinkedHashMap;
@@ -27,17 +27,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.kie.pmml.benchmark.jpmml.Builder.getModelEvaluator;
+import static org.kie.pmml.benchmark.jpmml.linearregression.LinearRegressionBuilder.getLinearRegressionModelEvaluator;
 
-@BenchmarkMode(Mode.AverageTime)
-@State(Scope.Benchmark)
-@Warmup(iterations = 12, time = 20)
-@Measurement(iterations = 5, time = 20)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@BenchmarkMode(Mode.Throughput)
+@State(Scope.Thread)
+@Warmup(iterations = 2)
+@Measurement(iterations = 5, time = 30)
+@OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(value = 2)
-public class SimpleBenchmark extends SimpleAbstractBenchmark {
+public class BatchLinearRegressionBenchmark extends BatchAbstractLinearRegressionBenchmark {
 
     private Map<FieldName, FieldValue> arguments;
+
+    @Param({"0", "1", "2", "3"})
+    int index;
 
     @State(Scope.Benchmark)
     public static class MyState {
@@ -45,8 +48,7 @@ public class SimpleBenchmark extends SimpleAbstractBenchmark {
 
         @Setup(Level.Trial)
         public void initialize() {
-            System.out.println("initialize");
-            evaluator = getModelEvaluator();
+            evaluator = getLinearRegressionModelEvaluator();
         }
 
         @TearDown(Level.Trial)
@@ -57,7 +59,9 @@ public class SimpleBenchmark extends SimpleAbstractBenchmark {
 
     @Setup
     public void setupModel(MyState state) {
-        arguments = getArguments(state.evaluator.getInputFields());
+        System.out.println("setup arguments...");
+        arguments = getArguments(state.evaluator.getInputFields(), index);
+        System.out.println("... setup complete!");
     }
 
     @Benchmark
@@ -65,12 +69,13 @@ public class SimpleBenchmark extends SimpleAbstractBenchmark {
         return state.evaluator.evaluate(arguments);
     }
 
-    private Map<FieldName, FieldValue> getArguments(List<? extends InputField> inputFields) {
+    private static Map<FieldName, FieldValue> getArguments(List<? extends InputField> inputFields, int index) {
         Map<FieldName, FieldValue> toReturn = new LinkedHashMap<>();
+        final Map<String, Object> objectsMap = getObjectsMap(index);
         // Mapping the record field-by-field from data source schema to PMML schema
         for (InputField inputField : inputFields) {
             FieldName inputName = inputField.getName();
-            Object rawValue = INPUT_DATA.get(inputName.getValue());
+            Object rawValue = objectsMap.get(inputName.getValue());
             // Transforming an arbitrary user-supplied value to a known-good PMML value
             FieldValue inputValue = inputField.prepare(rawValue);
             toReturn.put(inputName, inputValue);

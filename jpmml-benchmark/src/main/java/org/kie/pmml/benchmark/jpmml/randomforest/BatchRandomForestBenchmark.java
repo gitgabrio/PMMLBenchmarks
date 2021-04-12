@@ -13,31 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.pmml.benchmark.jpmml;
+package org.kie.pmml.benchmark.jpmml.randomforest;
 
 import org.dmg.pmml.FieldName;
 import org.jpmml.evaluator.FieldValue;
 import org.jpmml.evaluator.InputField;
 import org.jpmml.evaluator.ModelEvaluator;
-import org.kie.pmml.benchmark.common.BatchAbstractBenchmark;
+import org.kie.pmml.benchmark.common.randomforest.BatchAbstractRandomForestBenchmark;
 import org.openjdk.jmh.annotations.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.kie.pmml.benchmark.jpmml.Builder.getModelEvaluator;
+import static org.kie.pmml.benchmark.jpmml.randomforest.RandomForestBuilder.getRandomForestModelEvaluator;
 
 @BenchmarkMode(Mode.Throughput)
 @State(Scope.Thread)
 @Warmup(iterations = 2)
 @Measurement(iterations = 5, time = 30)
 @OutputTimeUnit(TimeUnit.SECONDS)
-//@Fork(value = 5)
-public class BatchBenchmark extends BatchAbstractBenchmark {
+@Fork(value = 2)
+public class BatchRandomForestBenchmark extends BatchAbstractRandomForestBenchmark {
 
     private Map<FieldName, FieldValue> arguments;
 
@@ -50,7 +48,7 @@ public class BatchBenchmark extends BatchAbstractBenchmark {
 
         @Setup(Level.Trial)
         public void initialize() {
-            evaluator = getModelEvaluator();
+            evaluator = getRandomForestModelEvaluator();
         }
 
         @TearDown(Level.Trial)

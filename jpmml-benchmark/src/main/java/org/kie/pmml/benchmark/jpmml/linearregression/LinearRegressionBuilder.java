@@ -13,22 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.pmml.benchmark.jpmml;
+package org.kie.pmml.benchmark.jpmml.linearregression;
 
 import org.jpmml.evaluator.LoadingModelEvaluatorBuilder;
 import org.jpmml.evaluator.ModelEvaluator;
-import org.jpmml.model.visitors.VisitorBattery;
 
-import static org.kie.pmml.benchmark.common.AbstractBenchmark.PMML_FILE;
+import static org.kie.pmml.benchmark.common.randomforest.AbstractRandomForestBenchmark.PMML_FILE;
 
-public class Builder {
+public class LinearRegressionBuilder {
 
     private static ModelEvaluator<?> INSTANCE;
 
-    private Builder() {
+    private LinearRegressionBuilder() {
     }
 
-    public static synchronized ModelEvaluator<?> getModelEvaluator() {
+    public static synchronized ModelEvaluator<?> getLinearRegressionModelEvaluator() {
        try {
            if (INSTANCE == null) {
                INSTANCE = getModelEvaluatorInternal();
@@ -45,7 +44,6 @@ public class Builder {
         // Building a model evaluator from a PMML file
         ModelEvaluator<?> toReturn = new LoadingModelEvaluatorBuilder()
                 .setLocatable(false)
-                .setVisitors(new VisitorBattery())
                 .load(PMML_FILE)
                 .build();
         // Performing the self-check

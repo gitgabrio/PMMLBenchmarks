@@ -13,33 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.pmml.benchmark.trusty;
+package org.kie.pmml.benchmark.trusty.linearregression;
 
 import org.kie.api.pmml.PMML4Result;
 import org.kie.api.pmml.PMMLRequestData;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.api.runtime.PMMLRuntime;
-import org.kie.pmml.benchmark.common.BatchAbstractBenchmark;
+import org.kie.pmml.benchmark.common.linearregression.SimpleAbstractLinearRegressionBenchmark;
 import org.kie.pmml.evaluator.core.PMMLContextImpl;
 import org.openjdk.jmh.annotations.*;
 
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.kie.pmml.benchmark.trusty.Builder.getPMMLRuntime;
+import static org.kie.pmml.benchmark.trusty.linearregression.LinearRegressionBuilder.getLinearRegressionPMMLRuntime;
 
-@BenchmarkMode(Mode.Throughput)
-@State(Scope.Thread)
-@Warmup(iterations = 2)
-@Measurement(iterations = 5, time = 30)
-@OutputTimeUnit(TimeUnit.SECONDS)
-//@Fork(value = 5)
-public class BatchBenchmark extends BatchAbstractBenchmark {
+@BenchmarkMode(Mode.AverageTime)
+@State(Scope.Benchmark)
+@Warmup(iterations = 12, time = 20)
+@Measurement(iterations = 5, time = 20)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@Fork(value = 2)
+public class SimpleLinearRegressionBenchmark extends SimpleAbstractLinearRegressionBenchmark {
 
     private PMMLContext pmmlContext;
-
-    @Param({"0", "1", "2", "3"})
-    int index;
 
     @State(Scope.Benchmark)
     public static class MyState {
@@ -47,7 +43,7 @@ public class BatchBenchmark extends BatchAbstractBenchmark {
 
         @Setup(Level.Trial)
         public void initialize() {
-            pmmlRuntime = getPMMLRuntime();
+            pmmlRuntime = getLinearRegressionPMMLRuntime();
         }
 
         @TearDown(Level.Trial)
@@ -58,12 +54,9 @@ public class BatchBenchmark extends BatchAbstractBenchmark {
 
     @Setup
     public void setupModel() {
-        System.out.println("setup pmmlContext...");
         PMMLRequestData pmmlRequestData = new PMMLRequestData("123", MODEL_NAME);
-        final Map<String, Object> objectsMap = getObjectsMap(index);
-        objectsMap.forEach(pmmlRequestData::addRequestParam);
+        INPUT_DATA.forEach(pmmlRequestData::addRequestParam);
         pmmlContext = new PMMLContextImpl(pmmlRequestData);
-        System.out.println("... setup complete!");
     }
 
     @Benchmark

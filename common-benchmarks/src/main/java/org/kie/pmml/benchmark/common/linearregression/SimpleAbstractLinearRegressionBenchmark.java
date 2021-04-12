@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.pmml.benchmark.common;
+package org.kie.pmml.benchmark.common.linearregression;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class SimpleAbstractBenchmark extends AbstractBenchmark {
+public abstract class SimpleAbstractLinearRegressionBenchmark extends AbstractLinearRegressionBenchmark {
 
     public static final Map<String, Object> INPUT_DATA;
 
     static {
         INPUT_DATA = new HashMap<>();
-        INPUT_DATA.put("Age", 40.83);
-        INPUT_DATA.put("MonthlySalary", 3.5);
-        INPUT_DATA.put("TotalAsset", 0.04);
-        INPUT_DATA.put("TotalRequired", 10.04);
-        INPUT_DATA.put("NumberInstallments", 93.2);
+        INPUT_DATA.put("age", 27.0);
+        INPUT_DATA.put("salary", 34000.0);
+        INPUT_DATA.put("car_location", "street");
     }
 }

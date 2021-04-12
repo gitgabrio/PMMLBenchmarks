@@ -13,26 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.pmml.benchmark.jpmml;
+package org.kie.pmml.benchmark.jpmml.linearregression;
 
 import org.dmg.pmml.FieldName;
 import org.jpmml.evaluator.FieldValue;
 import org.jpmml.evaluator.InputField;
 import org.jpmml.evaluator.ModelEvaluator;
-import org.kie.pmml.benchmark.common.SimpleAbstractBenchmark;
+import org.kie.pmml.benchmark.common.linearregression.SimpleAbstractLinearRegressionBenchmark;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.kie.pmml.benchmark.jpmml.Builder.getModelEvaluator;
+import static org.kie.pmml.benchmark.jpmml.randomforest.RandomForestBuilder.getRandomForestModelEvaluator;
 
-public class SimpleMain extends SimpleAbstractBenchmark {
+public class SimpleLinearRegressionMain extends SimpleAbstractLinearRegressionBenchmark {
 
     public static void main(String[] args) {
         AtomicInteger counter = new AtomicInteger();
         long startTime = System.currentTimeMillis();
-        ModelEvaluator<?> evaluator = getModelEvaluator();
+        ModelEvaluator<?> evaluator = getRandomForestModelEvaluator();
         long intermediateTime = System.currentTimeMillis();
         for (int i = 0; i < 1000; i++) {
             Map<FieldName, FieldValue> arguments = setupModel(evaluator);

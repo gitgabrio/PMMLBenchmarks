@@ -13,29 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kie.pmml.benchmark.trusty;
+package org.kie.pmml.benchmark.trusty.randomforest;
 
 import org.kie.api.pmml.PMML4Result;
 import org.kie.api.pmml.PMMLRequestData;
 import org.kie.pmml.api.runtime.PMMLContext;
 import org.kie.pmml.api.runtime.PMMLRuntime;
-import org.kie.pmml.benchmark.common.SimpleAbstractBenchmark;
+import org.kie.pmml.benchmark.common.randomforest.BatchAbstractRandomForestBenchmark;
 import org.kie.pmml.evaluator.core.PMMLContextImpl;
 import org.openjdk.jmh.annotations.*;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static org.kie.pmml.benchmark.trusty.Builder.getPMMLRuntime;
+import static org.kie.pmml.benchmark.trusty.randomforest.RandomForestBuilder.getRandomForestPMMLRuntime;
 
-@BenchmarkMode(Mode.AverageTime)
-@State(Scope.Benchmark)
-@Warmup(iterations = 12, time = 20)
-@Measurement(iterations = 5, time = 20)
-@OutputTimeUnit(TimeUnit.MILLISECONDS)
+@BenchmarkMode(Mode.Throughput)
+@State(Scope.Thread)
+@Warmup(iterations = 2)
+@Measurement(iterations = 5, time = 30)
+@OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(value = 2)
-public class SimpleBenchmark extends SimpleAbstractBenchmark {
+public class BatchRandomForestBenchmark extends BatchAbstractRandomForestBenchmark {
 
     private PMMLContext pmmlContext;
+
+    @Param({"0", "1", "2", "3"})
+    int index;
 
     @State(Scope.Benchmark)
     public static class MyState {
@@ -43,7 +47,7 @@ public class SimpleBenchmark extends SimpleAbstractBenchmark {
 
         @Setup(Level.Trial)
         public void initialize() {
-            pmmlRuntime = getPMMLRuntime();
+            pmmlRuntime = getRandomForestPMMLRuntime();
         }
 
         @TearDown(Level.Trial)
@@ -54,9 +58,12 @@ public class SimpleBenchmark extends SimpleAbstractBenchmark {
 
     @Setup
     public void setupModel() {
+        System.out.println("setup pmmlContext...");
         PMMLRequestData pmmlRequestData = new PMMLRequestData("123", MODEL_NAME);
-        INPUT_DATA.forEach(pmmlRequestData::addRequestParam);
+        final Map<String, Object> objectsMap = getObjectsMap(index);
+        objectsMap.forEach(pmmlRequestData::addRequestParam);
         pmmlContext = new PMMLContextImpl(pmmlRequestData);
+        System.out.println("... setup complete!");
     }
 
     @Benchmark
