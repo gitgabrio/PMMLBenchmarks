@@ -25,10 +25,10 @@ You can define several JMH parameters for executing the benchmarks:
 You can also define a wildcard pattern, that specifies, which benchmarks should be run.
 Examples
 
-Running trusty SimpleBenchmark and storing results in file trusty-results.json:
+Running trusty SimpleBenchmark and storing results in file trusty-drools-results.json:
 
-    cd trusty-benchmarks
-    java -jar target/trusty-benchmarks.jar -jvmArgs "-Xms4g -Xmx4g" -foe true -rf json -rff trusty-results.json SimpleLinearRegressionBenchmark
+    cd trusty-drools-benchmarks
+    java -jar target/trusty-drools-benchmarks.jar -jvmArgs "-Xms4g -Xmx4g" -foe true -rf json -rff trusty-drools-results.json SimpleLinearRegressionBenchmark
 
 Running jpmml SimpleBenchmark and storing results in file trusty-results.json:
 
@@ -38,3 +38,26 @@ Running jpmml SimpleBenchmark and storing results in file trusty-results.json:
 Running with async profiling 
 
     java -jar target/jpmml-benchmarks.jar -prof gc -jvmArgs "-Xms24g -Xmx24g" -foe true -rf json -rff jpmml-results.json SimpleLinearRegressionBenchmark
+
+
+Actual commands
+===============
+
+JPMML
+-----
+
+    cd jpmml-benchmarks
+    java -jar target/jpmml-benchmarks.jar -jvmArgs "-Xms4g -Xmx4g" -foe true -rf json -rff jpmml-results.json SimpleLinearRegressionBenchmark
+
+TRUSTY - NO DROOLS
+------------------
+
+    cd trusty-nodrools-benchmarks
+    java -jar target/trusty-nodrools-benchmark.jar -jvmArgs "-Xms4g -Xmx4g" -foe true -rf json -rff trusty-nodrools-results.json SimpleLinearRegressionBenchmark
+
+TRUSTY - DROOLS
+---------------
+
+    cd trusty-drools-benchmarks
+    java -jar target/trusty-drools-benchmarks.jar -jvmArgs "-Xms4g -Xmx4g" -foe true -rf json -rff trusty-drools-results.json SimpleLinearRegressionBenchmark
+
