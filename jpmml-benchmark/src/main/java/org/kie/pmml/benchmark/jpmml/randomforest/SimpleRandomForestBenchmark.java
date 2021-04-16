@@ -45,7 +45,6 @@ public class SimpleRandomForestBenchmark extends SimpleAbstractRandomForestBench
 
         @Setup(Level.Trial)
         public void initialize() {
-            System.out.println("initialize");
             evaluator = getRandomForestModelEvaluator();
         }
 

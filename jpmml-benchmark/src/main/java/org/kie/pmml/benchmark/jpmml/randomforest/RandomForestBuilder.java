@@ -40,7 +40,6 @@ public class RandomForestBuilder {
     }
 
     private static ModelEvaluator<?> getModelEvaluatorInternal() throws Exception {
-        System.out.println("setup evaluator...");
         // Building a model evaluator from a PMML file
         ModelEvaluator<?> toReturn = new LoadingModelEvaluatorBuilder()
                 .setLocatable(false)
@@ -48,7 +47,6 @@ public class RandomForestBuilder {
                 .build();
         // Performing the self-check
         toReturn.verify();
-        System.out.println("evaluator " + toReturn);
         return toReturn;
     }
 

@@ -10,8 +10,10 @@
     <modules>
         <module>common-benchmarks</module>
         <module>jpmml-benchmark</module>
-        <module>trusty-kjar</module>
-        <module>trusty-benchmark</module>
+        <module>trusty-nodrools-kjar</module>
+        <module>trusty-nodrools-benchmark</module>
+        <module>trusty-drools-kjar</module>
+        <module>trusty-drools-benchmark</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -21,9 +23,9 @@
         <version.jmh>1.21</version.jmh>
         <version.junit>4.13.1</version.junit>
         <version.sl4j>1.7.30</version.sl4j>
-        <kie.version>7.52.0.Final</kie.version>
+        <kie.version>7.53.0-SNAPSHOT</kie.version>
         <shade.plugin.version>3.2.4</shade.plugin.version>
-        <uberjar.nam></uberjar.nam>
+        <uberjar.name></uberjar.name>
     </properties>
 
     <build>

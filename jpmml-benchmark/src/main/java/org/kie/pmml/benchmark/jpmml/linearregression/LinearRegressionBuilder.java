@@ -40,15 +40,13 @@ public class LinearRegressionBuilder {
     }
 
     private static ModelEvaluator<?> getModelEvaluatorInternal() throws Exception {
-        System.out.println("setup evaluator...");
-        // Building a model evaluator from a PMML file
+         // Building a model evaluator from a PMML file
         ModelEvaluator<?> toReturn = new LoadingModelEvaluatorBuilder()
                 .setLocatable(false)
                 .load(PMML_FILE)
                 .build();
         // Performing the self-check
         toReturn.verify();
-        System.out.println("evaluator " + toReturn);
         return toReturn;
     }
 

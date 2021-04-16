@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>PMMLBenchmarks</artifactId>
+        <groupId>org.kie.pmml</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>trusty-nodrools-benchmark</artifactId>
+
+    <properties>
+        <uberjar.name>trusty-nodrools-benchmark</uberjar.name>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-pmml-dependencies</artifactId>
+            <version>${kie.version}</version>
+            <exclusions>
+                <!-- Tree -->
+                <exclusion>
+                    <groupId>org.kie</groupId>
+                    <artifactId>kie-pmml-models-drools-tree-model</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.kie</groupId>
+                    <artifactId>kie-pmml-models-drools-tree-compiler</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.kie</groupId>
+                    <artifactId>kie-pmml-models-drools-tree-evaluator</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Tree -->
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-pmml-models-tree-model</artifactId>
+            <version>${kie.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-pmml-models-tree-compiler</artifactId>
+            <version>${kie.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-pmml-models-tree-evaluator</artifactId>
+            <version>${kie.version}</version>
+        </dependency>
+        <!-- COMMON -->
+        <dependency>
+            <groupId>org.kie.pmml</groupId>
+            <artifactId>common-benchmarks</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kie.pmml</groupId>
+            <artifactId>trusty-nodrools-kjar</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>

@@ -59,9 +59,7 @@ public class BatchLinearRegressionBenchmark extends BatchAbstractLinearRegressio
 
     @Setup
     public void setupModel(MyState state) {
-        System.out.println("setup arguments...");
         arguments = getArguments(state.evaluator.getInputFields(), index);
-        System.out.println("... setup complete!");
     }
 
     @Benchmark
